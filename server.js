@@ -19,10 +19,30 @@ app.get("/", function (req, res) {
   res.sendFile(__dirname + '/views/index.html');
 });
 
+const requestIp  = require('request-ip');
+
+var ipMiddlewareFn = (req, res, next) => {
+  const clientTo = requestIp.getClientIp(req);
+  next();
+};
+
+app.use(requestIP.mw());
+
 
 // your first API endpoint... 
 app.get("/api/hello", function (req, res) {
   res.json({greeting: 'hello API'});
+});
+
+app.get("/api/whoami", (req, res) => {
+  var ipAddress = req.clientIp;
+  var lang = req.acceptsLanguages();
+  var software = req.get('User-Agent');
+  res.json({
+    ipaddress: ipAddress,
+    language: lang[0],
+    software: software
+  });
 });
 
 
