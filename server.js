@@ -26,7 +26,7 @@ var ipMiddlewareFn = (req, res, next) => {
   next();
 };
 
-app.use(requestIP.mw());
+app.use(requestIp.mw());
 
 
 // your first API endpoint... 
